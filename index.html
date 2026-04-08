@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Excavator Scout - Iframe Staging Demo</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b0b0b;
+        --panel: #161616;
+        --ink: #f5f1ee;
+        --muted: #9c9692;
+        --signal: #f83c18;
+        --line: #2a2a2a;
+        --radius: 10px;
+        font-family:
+          ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        min-height: 100vh;
+      }
+      header {
+        padding: 24px 32px;
+        border-bottom: 1px solid var(--line);
+      }
+      header h1 {
+        margin: 0;
+        font-size: 18px;
+        letter-spacing: 0.04em;
+      }
+      header h1 span {
+        color: var(--signal);
+      }
+      header p {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .draft {
+        display: inline-block;
+        margin-top: 8px;
+        padding: 4px 10px;
+        background: rgba(248, 60, 24, 0.12);
+        color: var(--signal);
+        border: 1px solid rgba(248, 60, 24, 0.45);
+        border-radius: 999px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      main {
+        padding: 32px;
+        display: grid;
+        grid-template-columns: minmax(280px, 360px) 1fr;
+        gap: 32px;
+      }
+      @media (max-width: 900px) {
+        main {
+          grid-template-columns: 1fr;
+        }
+      }
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px;
+      }
+      .panel h2 {
+        margin: 0 0 12px;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+      label {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        margin: 12px 0 4px;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 10px 12px;
+        background: #0b0b0b;
+        color: var(--ink);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+      }
+      input[type="text"]:focus {
+        outline: none;
+        border-color: var(--signal);
+      }
+      button {
+        margin-top: 16px;
+        width: 100%;
+        padding: 12px 14px;
+        background: var(--signal);
+        color: #ffffff;
+        border: 0;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        letter-spacing: 0.02em;
+      }
+      button.secondary {
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--line);
+      }
+      .iframe-wrap {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+        min-height: 720px;
+        display: flex;
+        flex-direction: column;
+      }
+      .iframe-wrap header {
+        background: #1c1c1c;
+        border-bottom: 1px solid var(--line);
+        padding: 14px 18px;
+      }
+      .iframe-wrap header h2 {
+        margin: 0;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+      .iframe-wrap header code {
+        display: block;
+        margin-top: 4px;
+        font-size: 11px;
+        color: var(--ink);
+        word-break: break-all;
+      }
+      iframe {
+        flex: 1;
+        width: 100%;
+        border: 0;
+        background: #050505;
+        min-height: 640px;
+      }
+      .empty-state {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        color: var(--muted);
+        text-align: center;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+      footer {
+        padding: 18px 32px 32px;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.6;
+      }
+      footer code {
+        color: var(--ink);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Excavator <span>Scout</span> &nbsp;-&nbsp; Iframe Staging Demo</h1>
+      <p>
+        Static parent page used to exercise the embeddable chat against the
+        Excavator Scout app under development. Not customer-facing.
+      </p>
+      <span class="draft">STAGING - NOT FOR PRODUCTION</span>
+    </header>
+
+    <main>
+      <section class="panel" aria-labelledby="config-heading">
+        <h2 id="config-heading">Embed Configuration</h2>
+
+        <label for="app-url">App origin (Excavator Scout)</label>
+        <input
+          id="app-url"
+          type="text"
+          placeholder="https://chere-prowessed-uncustomarily.ngrok-free.dev"
+        />
+
+        <label for="tenant-id">Tenant ID</label>
+        <input id="tenant-id" type="text" placeholder="default" />
+
+        <label for="shop-id">Shop ID (optional)</label>
+        <input id="shop-id" type="text" placeholder="default" />
+
+        <button type="button" id="apply">Load embed</button>
+        <button type="button" id="reset" class="secondary">Reset</button>
+
+        <p style="margin-top: 18px; font-size: 11px; color: var(--muted)">
+          Values persist in <code>localStorage</code> so refreshes do not lose
+          your settings. The default app origin points at the project's pinned
+          ngrok tunnel; override it for any other environment.
+        </p>
+      </section>
+
+      <section class="iframe-wrap" aria-label="Embedded Excavator Scout chat">
+        <header>
+          <h2>Embed target</h2>
+          <code id="embed-url">(not loaded)</code>
+        </header>
+        <div id="empty" class="empty-state">
+          Configure the app origin and tenant id, then click
+          <strong>Load embed</strong>. The iframe will request
+          <code>/embed/chat</code> on the chosen origin and the parent
+          <code>document.referrer</code> will be this page.
+        </div>
+        <iframe
+          id="embed"
+          title="Excavator Scout embedded chat"
+          allow="clipboard-write"
+          referrerpolicy="strict-origin-when-cross-origin"
+          hidden
+        ></iframe>
+      </section>
+    </main>
+
+    <footer>
+      Repo: <code>JadenData/bauma-demo-page</code>. The legacy
+      <code>bauma</code> prefix is intentional and kept for historical reasons.
+      For Excavator Scout iframe E2E coverage (STORY-009) the parent origin used
+      here must already be present in the supplier workspace
+      <code>allowed_origins</code> seeded by STORY-004.
+    </footer>
+
+    <script>
+      (function () {
+        const KEY = "exsc-demo-config-v1";
+        const $ = (id) => document.getElementById(id);
+        const appInput = $("app-url");
+        const tenantInput = $("tenant-id");
+        const shopInput = $("shop-id");
+        const iframe = $("embed");
+        const empty = $("empty");
+        const urlLabel = $("embed-url");
+
+        const defaults = {
+          appUrl: "https://chere-prowessed-uncustomarily.ngrok-free.dev",
+          tenantId: "default",
+          shopId: "",
+        };
+
+        function load() {
+          let cfg = {};
+          try {
+            cfg = JSON.parse(localStorage.getItem(KEY) || "{}");
+          } catch (_) {
+            cfg = {};
+          }
+          appInput.value = cfg.appUrl || defaults.appUrl;
+          tenantInput.value = cfg.tenantId || defaults.tenantId;
+          shopInput.value = cfg.shopId || defaults.shopId;
+        }
+
+        function save() {
+          localStorage.setItem(
+            KEY,
+            JSON.stringify({
+              appUrl: appInput.value.trim(),
+              tenantId: tenantInput.value.trim(),
+              shopId: shopInput.value.trim(),
+            })
+          );
+        }
+
+        function buildUrl() {
+          const origin = (appInput.value || defaults.appUrl).replace(/\/$/, "");
+          const tenant = encodeURIComponent(
+            tenantInput.value || defaults.tenantId
+          );
+          const shop = shopInput.value
+            ? `&shop_id=${encodeURIComponent(shopInput.value)}`
+            : "";
+          return `${origin}/embed/chat?tenant_id=${tenant}${shop}`;
+        }
+
+        function apply() {
+          save();
+          const url = buildUrl();
+          urlLabel.textContent = url;
+          iframe.src = url;
+          iframe.hidden = false;
+          empty.style.display = "none";
+        }
+
+        function reset() {
+          localStorage.removeItem(KEY);
+          load();
+          urlLabel.textContent = "(not loaded)";
+          iframe.removeAttribute("src");
+          iframe.hidden = true;
+          empty.style.display = "";
+        }
+
+        $("apply").addEventListener("click", apply);
+        $("reset").addEventListener("click", reset);
+        load();
+      })();
+    </script>
+  </body>
+</html>
