@@ -118,6 +118,48 @@
         color: var(--muted);
         border: 1px solid var(--line);
       }
+      .preset-row {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .preset-row button {
+        margin-top: 0;
+        padding: 8px 10px;
+        font-size: 11px;
+        font-weight: 500;
+        background: #1f1f1f;
+        color: var(--ink);
+        border: 1px solid var(--line);
+      }
+      .preset-row button:hover {
+        border-color: var(--signal);
+      }
+      .ralph-note {
+        margin-top: 18px;
+        padding: 14px 16px;
+        background: rgba(248, 60, 24, 0.06);
+        border: 1px dashed rgba(248, 60, 24, 0.4);
+        border-radius: 8px;
+        font-size: 11px;
+        line-height: 1.6;
+        color: var(--ink);
+      }
+      .ralph-note strong {
+        color: var(--signal);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-size: 10px;
+      }
+      .ralph-note ul {
+        margin: 6px 0 0;
+        padding-left: 18px;
+        color: var(--muted);
+      }
+      .ralph-note code {
+        color: var(--ink);
+        font-size: 10px;
+      }
       .iframe-wrap {
         background: var(--panel);
         border: 1px solid var(--line);
@@ -195,6 +237,10 @@
           type="text"
           placeholder="https://chere-prowessed-uncustomarily.ngrok-free.dev"
         />
+        <div class="preset-row">
+          <button type="button" data-preset="ngrok">Use ngrok</button>
+          <button type="button" data-preset="vercel">Use Vercel</button>
+        </div>
 
         <label for="tenant-id">Tenant ID</label>
         <input id="tenant-id" type="text" placeholder="default" />
@@ -208,8 +254,37 @@
         <p style="margin-top: 18px; font-size: 11px; color: var(--muted)">
           Values persist in <code>localStorage</code> so refreshes do not lose
           your settings. The default app origin points at the project's pinned
-          ngrok tunnel; override it for any other environment.
+          ngrok tunnel; switch to the Vercel preview at
+          <code>https://excavatorscout.vercel.app/</code> when ngrok is offline.
         </p>
+
+        <div class="ralph-note">
+          <strong>Note for Ralph</strong>
+          <ul>
+            <li>
+              You are explicitly allowed to modify this page (HTML, presets,
+              theming, debug controls) and push changes directly to
+              <code>main</code>. Pages auto-deploys.
+            </li>
+            <li>
+              Use whichever iframe child is currently reachable: the pinned
+              ngrok tunnel
+              <code>https://chere-prowessed-uncustomarily.ngrok-free.dev</code>
+              when running locally, or the Vercel preview
+              <code>https://excavatorscout.vercel.app/</code> otherwise.
+            </li>
+            <li>
+              The parent origin shown to the iframe is always
+              <code>https://jadendata.github.io</code>; that is the value
+              STORY-004 must seed into the supplier workspace
+              <code>allowed_origins</code>.
+            </li>
+            <li>
+              Do not rename the repo — the legacy <code>bauma</code> prefix is
+              intentional.
+            </li>
+          </ul>
+        </div>
       </section>
 
       <section class="iframe-wrap" aria-label="Embedded Excavator Scout chat">
@@ -256,6 +331,11 @@
           appUrl: "https://chere-prowessed-uncustomarily.ngrok-free.dev",
           tenantId: "default",
           shopId: "",
+        };
+
+        const presets = {
+          ngrok: "https://chere-prowessed-uncustomarily.ngrok-free.dev",
+          vercel: "https://excavatorscout.vercel.app",
         };
 
         function load() {
@@ -312,6 +392,15 @@
 
         $("apply").addEventListener("click", apply);
         $("reset").addEventListener("click", reset);
+        document.querySelectorAll("button[data-preset]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const key = btn.getAttribute("data-preset");
+            if (presets[key]) {
+              appInput.value = presets[key];
+              save();
+            }
+          });
+        });
         load();
       })();
     </script>

@@ -15,18 +15,28 @@ This repository hosts a single `index.html` that loads the embeddable Excavator 
 
 ## Configuration
 
-The demo loads the iframe against an app origin you can set in the UI. Defaults:
+The demo loads the iframe against an app origin you can set in the UI. There are two supported app origins for the iframe child during MVP development:
 
-- App origin: `https://chere-prowessed-uncustomarily.ngrok-free.dev` (the project's pinned ngrok tunnel pointing at local `localhost:3000`)
-- Tenant id: `default`
-- Shop id: empty
+- `https://chere-prowessed-uncustomarily.ngrok-free.dev` — the project's pinned ngrok tunnel pointing at local `localhost:3000`. Default. Use when running the app locally with `ngrok http --url=chere-prowessed-uncustomarily.ngrok-free.dev 3000`.
+- `https://excavatorscout.vercel.app/` — Vercel preview deployment. Use when ngrok is not running.
 
-Values are persisted to `localStorage` so refreshes do not lose state.
+The page exposes one-click "Use ngrok" / "Use Vercel" preset buttons. Tenant id defaults to `default`; shop id is optional. Values are persisted to `localStorage` (key `exsc-demo-config-v1`) so refreshes do not lose state.
+
+## Ralph permissions
+
+Ralph (the autonomous agent driving the MVP) is **explicitly allowed to modify this page**. This includes:
+
+- editing `index.html` (HTML, CSS, JavaScript, presets, debug controls)
+- changing the default app origin or tenant id
+- adding new debug surfaces (origin echo, console mirror, network log, etc.) that help iframe E2E coverage in STORY-009
+- pushing directly to `main` — GitHub Pages auto-deploys from the `main` branch root
+
+The only constraint is that this repo intentionally retains the legacy `bauma` prefix; do not rename it.
 
 ## Updating the page
 
-Edit `index.html` and push to `main`. GitHub Pages serves the `main` branch root.
+Edit `index.html` and push to `main`. GitHub Pages serves the `main` branch root. The `.nojekyll` file disables Jekyll processing so all paths are served verbatim.
 
 ## Why a separate repo
 
-Keeping the staging parent in its own repo makes the cross-origin requirement honest: the Excavator Scout app and the parent page have different origins (`*.vercel.app` / ngrok vs `*.github.io`), which is what the iframe security path needs to validate.
+Keeping the staging parent in its own repo makes the cross-origin requirement honest: the Excavator Scout app and the parent page have different origins (`*.vercel.app` / ngrok vs `*.github.io`), which is what the iframe security path needs to validate. The parent origin (always `https://jadendata.github.io`) is what STORY-004 must seed into the supplier workspace `allowed_origins`.
