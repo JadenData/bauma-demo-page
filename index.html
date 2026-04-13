@@ -235,7 +235,7 @@
         <input
           id="app-url"
           type="text"
-          placeholder="https://chere-prowessed-uncustomarily.ngrok-free.dev"
+          placeholder="https://excavatorscout.vercel.app"
         />
         <div class="preset-row">
           <button type="button" data-preset="ngrok">Use ngrok</button>
@@ -243,10 +243,10 @@
         </div>
 
         <label for="tenant-id">Tenant ID</label>
-        <input id="tenant-id" type="text" placeholder="default" />
+        <input id="tenant-id" type="text" placeholder="hydraulikdichtungen24" />
 
-        <label for="shop-id">Shop ID (optional)</label>
-        <input id="shop-id" type="text" placeholder="default" />
+        <label for="shop-id">Shop ID</label>
+        <input id="shop-id" type="text" placeholder="5720a9f5-314b-49c5-ac2f-67d500f23adb" />
 
         <button type="button" id="apply">Load embed</button>
         <button type="button" id="reset" class="secondary">Reset</button>
@@ -328,9 +328,9 @@
         const urlLabel = $("embed-url");
 
         const defaults = {
-          appUrl: "https://chere-prowessed-uncustomarily.ngrok-free.dev",
-          tenantId: "default",
-          shopId: "",
+          appUrl: "https://excavatorscout.vercel.app",
+          tenantId: "hydraulikdichtungen24",
+          shopId: "5720a9f5-314b-49c5-ac2f-67d500f23adb",
         };
 
         const presets = {
@@ -366,10 +366,10 @@
           const tenant = encodeURIComponent(
             tenantInput.value || defaults.tenantId
           );
-          const shop = shopInput.value
-            ? `&shop_id=${encodeURIComponent(shopInput.value)}`
-            : "";
-          return `${origin}/embed/chat?tenant_id=${tenant}${shop}`;
+          const shop = encodeURIComponent(
+            shopInput.value || defaults.shopId
+          );
+          return `${origin}/embed/chat?tenant=${tenant}&shop=${shop}`;
         }
 
         function apply() {
