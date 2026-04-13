@@ -135,31 +135,6 @@
       .preset-row button:hover {
         border-color: var(--signal);
       }
-      .ralph-note {
-        margin-top: 18px;
-        padding: 14px 16px;
-        background: rgba(248, 60, 24, 0.06);
-        border: 1px dashed rgba(248, 60, 24, 0.4);
-        border-radius: 8px;
-        font-size: 11px;
-        line-height: 1.6;
-        color: var(--ink);
-      }
-      .ralph-note strong {
-        color: var(--signal);
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        font-size: 10px;
-      }
-      .ralph-note ul {
-        margin: 6px 0 0;
-        padding-left: 18px;
-        color: var(--muted);
-      }
-      .ralph-note code {
-        color: var(--ink);
-        font-size: 10px;
-      }
       .iframe-wrap {
         background: var(--panel);
         border: 1px solid var(--line);
@@ -258,33 +233,6 @@
           <code>https://excavatorscout.vercel.app/</code> when ngrok is offline.
         </p>
 
-        <div class="ralph-note">
-          <strong>Note for Ralph</strong>
-          <ul>
-            <li>
-              You are explicitly allowed to modify this page (HTML, presets,
-              theming, debug controls) and push changes directly to
-              <code>main</code>. Pages auto-deploys.
-            </li>
-            <li>
-              Use whichever iframe child is currently reachable: the pinned
-              ngrok tunnel
-              <code>https://chere-prowessed-uncustomarily.ngrok-free.dev</code>
-              when running locally, or the Vercel preview
-              <code>https://excavatorscout.vercel.app/</code> otherwise.
-            </li>
-            <li>
-              The parent origin shown to the iframe is always
-              <code>https://jadendata.github.io</code>; that is the value
-              STORY-004 must seed into the supplier workspace
-              <code>allowed_origins</code>.
-            </li>
-            <li>
-              Do not rename the repo — the legacy <code>bauma</code> prefix is
-              intentional.
-            </li>
-          </ul>
-        </div>
       </section>
 
       <section class="iframe-wrap" aria-label="Embedded Excavator Scout chat">
